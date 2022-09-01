@@ -4,7 +4,7 @@ using ComparePOC.Model;
 
 namespace ComparePOC.Comparer;
 
-public class PersonEqualityComparer : IEqualityComparer<Person>
+public class PersonEqualityComparer : EqualityComparer<Person>
 {
     private readonly ILogger<PersonEqualityComparer> _logger;
 
@@ -13,7 +13,7 @@ public class PersonEqualityComparer : IEqualityComparer<Person>
         _logger = logger;
     }
 
-    public bool Equals(Person? x, Person? y)
+    public override bool Equals(Person? x, Person? y)
     {
         if (x is null || y is null)
             return false;
@@ -28,7 +28,7 @@ public class PersonEqualityComparer : IEqualityComparer<Person>
         return hashPersonX == hashPersonY;
     }
 
-    public int GetHashCode([DisallowNull] Person obj)
+    public override int GetHashCode([DisallowNull] Person obj)
     {
         return (JsonSerializer.Serialize(obj)).GetHashCode();
     }
